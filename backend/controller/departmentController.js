@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose')
-const Department = require('../model/departmentsModel')
+const Department = require('../model/departmentModel')
 
 
 /**CREATE NEW Department */

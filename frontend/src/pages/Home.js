@@ -15,6 +15,8 @@ const Home = () => {
     return (
         <Container>
             <Navbar></Navbar>
+
+           { /**MAKE A CONDITIONAL FUNCTION HERE WHAT TO RENDER. FOR EXAMPLE I RENDER HERE THE DASHBOARD */}
             <Dashboard></Dashboard>
         </Container>
     )

@@ -7,19 +7,25 @@ import purple from '../images/radial-purple.png'
 import violet from '../images/radial-violet.png'
 import orange from '../images/radial-orange.png'
 import yellow from '../images/radial-yellow.png'
+import Header from './Header'
 
 
 const Container = styled.div`
     background-color: #f0f2f9;
     height: 100vh;
     width: 1500px;
-    padding: 100px;
+    padding: 50px 100px 100px 100px;
+`
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `
 const CardContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    
 `
 
 const Dashboard = () => {
@@ -27,6 +33,8 @@ const Dashboard = () => {
     return (
       
         <Container>
+            <Wrapper>
+            <Header title="Dashboard" user="Admin"/>
             <CardContainer>
                 <Cards title="Total Employees" data="10,000" color={violet}/>
                 <Cards title="Total Departments" data="15" color={yellow}/>
@@ -35,7 +43,9 @@ const Dashboard = () => {
             <CardContainer>
                 <Leaves title="New Leave Application" data="5" color={orange}/>
             </CardContainer>
+            </Wrapper>
         </Container>
+        
     )
 }
 

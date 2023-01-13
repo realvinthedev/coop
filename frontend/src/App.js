@@ -4,7 +4,7 @@ function App() {
      return (
           <div className="App">
                <BrowserRouter>
-               <div className='flex  h-screen border-4 border-black'>
+               <div className='flex'>
                <div className=''>
                     <Routes>
                          <Route
