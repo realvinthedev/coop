@@ -2,6 +2,10 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const employeeRoutes = require('./routes/employee')
+const leavesRoutes = require('./routes/leaves')
+const credentialsRoutes = require('./routes/credentials')
+const departmentRoutes = require('./routes/department')
+
 
 
 /**EXPRESS APP 
@@ -24,7 +28,9 @@ app.use(express.json())
  * different routes will be define here
  */
 app.use('/api/employee', employeeRoutes)
-
+app.use('/api/leaves', leavesRoutes)
+app.use('/api/credentials', credentialsRoutes)
+app.use('/api/departments', departmentRoutes)
 
 /**CONNECT TO DB */
 mongoose.connect(process.env.MONGO_URI)
