@@ -1,26 +1,26 @@
 const { default: mongoose } = require('mongoose')
-const Leave = require('../model/leavesModel')
+const Leaves = require('../model/leavesModel')
 
 
 /**CREATE NEW Leave */
 const createLeave = async (req, res) => {
       const { 
-          leave_id, 
-          leave_type, 
-          date, 
-          duration, 
-          status, 
-          approver
+            employee_id,
+            leave_type, 
+            date, 
+            duration, 
+            status, 
+            approver
      } = req.body
 
      try {
           const leave = await Leave.create({ 
-               leave_id, 
-               leave_type, 
-               date, 
-               duration, 
-               status, 
-               approver
+                  employee_id, 
+                  leave_type, 
+                  date, 
+                  duration, 
+                  status, 
+                  approver
           })
           res.status(200).json(leave)
      } catch (error) {

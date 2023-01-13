@@ -6,7 +6,7 @@ const {
      getAllLeaves,
      getSingleLeave,
      updateSingleLeave
-} = require('../controller/LeaveController')
+} = require('../controller/LeavesController')
 
 
 

@@ -54,7 +54,12 @@ const createEmployee = async (req, res) => {
                sick_leave, 
                vacation_leave, 
                emergency_leave 
-          } 
+          },
+          photo,
+          credentials: {
+               username,
+               password
+          }
      } = req.body
 
      try {
@@ -107,7 +112,12 @@ const createEmployee = async (req, res) => {
                     sick_leave, 
                     vacation_leave, 
                     emergency_leave 
-               } 
+               },
+               photo,
+               credentials: {
+                    username,
+                    password
+               }
           })
           res.status(200).json(employee)
      } catch (error) {

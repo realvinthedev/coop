@@ -1,0 +1,78 @@
+const { default: mongoose } = require('mongoose')
+const Department = require('../model/departmentsModel')
+
+
+/**CREATE NEW Department */
+const createDepartment = async (req, res) => {
+      const { 
+            department_name,
+            description
+     } = req.body
+
+     try {
+          const department = await Department.create({ 
+               department_name,
+               description
+          })
+          res.status(200).json(department)
+     } catch (error) {
+          res.status(400).json({ error: error.message })
+     }
+}
+
+const getAllDepartment = async (req, res) => {
+     try {
+           /**Workout.find - finding al entries from DB
+            * await Workout.find() will run immediately even
+            * if the "workout" variable is not called yet
+            */
+           const allDepartment = await Department.find({}).sort({ createdAt: -1 })
+           //displaying response to user: all workouts from DB
+           res.status(200).json(allDepartment)
+     } catch (error) {
+           res.status(400).json({ error: error.message })
+     }
+}
+
+const getSingleDepartment = async (req, res) => {
+     const { id } = req.params;
+
+     //check if the id passed in parameter is valid id.
+     if (!mongoose.Types.ObjectId.isValid(id)) {
+           return res.status(404).json({ error: 'No Department found' })
+     }
+
+     try {
+           const singleDepartment = await Department.findById(id)
+           //displaying response to user: single workout by ID from DB
+           res.status(200).json(singleDepartment)
+     } catch (error) {
+           res.status(400).json({ error: 'No Department found' })
+     }
+}
+
+
+const updateSingleDepartment = async (req, res) => {
+     const { id } = req.params
+
+     if (!mongoose.Types.ObjectId.isValid(id)) {
+           return res.status(404).json({ error: 'No Department found' })
+     }
+     try {
+           const singleDepartment = await Department.findOneAndUpdate({ _id: id }, {
+                 ...req.body
+           })
+
+           //displaying response to user: deleted workout by ID from DB
+           res.status(200).json(singleDepartment)
+     } catch (error) {
+           res.status(400).json({ error: 'No Department found' })
+     }
+}
+
+module.exports = {
+     createDepartment,
+     getAllDepartment,
+     getSingleDepartment,
+     updateSingleDepartment
+}
