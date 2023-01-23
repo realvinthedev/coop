@@ -30,70 +30,101 @@ const employeeSchema = new Schema({
             required: true
       },
       address: {
-            street: String,
-            postal_code: String,
-            province: String,
-            city: String,
-            country: String
+            type: String,
+            required: true
       },
+
       email: {
             type: String,
             required: true
       },
+
       contact_number: {
             type: Number,
             required: false
       },
-      emergency: {
-            emergency_name: String,
-            emergency_contact_number: Number,
-            emergency_address: String,
+      incase_of_emergency: {
+            type: String,
+            required: false
       },
-      job: {
-            job_title: String,
-            job_salary: Number,
-            job_start_date: String,
-            job_end_date: String,
-            job_contract: String
+      job_title: {
+            type: String,
+            required: true
+      },
+      salary: {
+            type: Number,
+            required: true
+      },
+      start_date: {
+            type: String,
+            required: true
+      },
+      end_date: {
+            type: String,
+            required: true
+      },
+      contract: {
+            type: String,
+            required: true
       },
       department: {
             type: String,
-            required: false
+            required: true
       },
       is_active: {
             type: Boolean,
             required: false
       },
-      benefits: {
-            sss: Number,
-            pagibig: Number,
-            tin: Number,
-            philhealth: Number
+      sss: {
+            type: String,
+            required: false
       },
-      payroll: {
-            base_salary: Number,
-            allowance: Number,
-            deduction: Number,
-            total: Number
+      pagibig: {
+            type: String,
+            required: false
       },
-      bank: {
-            bank_name: String,
-            bank_account_number: Number
+      tin: {
+            type: String,
+            required: false
       },
-      leaves: {
-            sick_leave: Number,
-            vacation_leave: Number,
-            emergency_leave: Number
+      philhealth: {
+            type: String,
+            required: false
+      },
+      bank_name: {
+            type: String,
+            required: false
+      },
+      bank_account_number: {
+            type: String,
+            required: false
+      },
+      sick_leave: {
+            type: Number,
+            required: true
+      },
+      vacation_leave: {
+            type: Number,
+            required: true
+      },
+      emergency_leave: {
+            type: Number,
+            required: true
       },
       photo: {
             type: String,
             required: false
       },
-      credentials: {
-            username: String,
-            password: String
-      }
+      username: {
+            type: String,
+            required: false
+      },
+      password: {
+            type: String,
+            required: false
+      },
 },
+
       {
             timestamps: true
       })

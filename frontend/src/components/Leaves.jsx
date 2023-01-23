@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useEffect, useState } from "react"
 
 const Container = styled.div`
     background-color: white;
@@ -27,19 +28,20 @@ const TextContainer = styled.div`
 const DataContainer = styled.div`
     
 `
-function createData(name, date, calories, fat, carbs, protein) {
-    return { name, date, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Juan Dela Cruz', "Jan-12", "IT", "SL", "NA", "PENDING"),
-    createData('Jayme Lanister', "Jan-12","CS", "SL", "NA", "PENDING"),
-    createData('Arya Stark',"Jan-12", "FIN", "SL", "NA", "PENDING"),
-    createData('Ned Stark', "Jan-12","IT", "SL", "NA", "PENDING"),
-    createData('Jon Snow', "Jan-12","IT", "SL", "NA", "APPROVED"),
-];
 
 const Leaves = (props) => {
+    const [leaves, setLeave] = useState(null)
+    useEffect(() => {
+        const fetchLeaves = async () => {
+              const response = await fetch('/api/leaves')
+              const json = await response.json()
+
+              if (response.ok) {
+                    setLeave(json)
+              }
+        }
+        fetchLeaves();
+  }, [])
     return (
         <Container>
             <DataContainer>
@@ -61,19 +63,17 @@ const Leaves = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
+                            {leaves && leaves.map((leave) => (
                                 <TableRow
-                                    key={row.name}
-                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="right">{row.date}</TableCell>
-                                    <TableCell align="right">{row.calories}</TableCell>
-                                    <TableCell align="right">{row.fat}</TableCell>
-                                    <TableCell align="right">{row.carbs}</TableCell>
-                                    <TableCell align="right">{row.protein}</TableCell>
+                                    key={leave._id}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+
+                                    <TableCell component="th" scope="row">{leave.employee_id}</TableCell>
+                                    <TableCell align="right">{leave.leave_type}</TableCell>
+                                    <TableCell align="right">{leave.date}</TableCell>
+                                    <TableCell align="right">{leave.duration}</TableCell>
+                                    <TableCell align="right">{leave.status}</TableCell>
+                                    <TableCell align="right">{leave.approver}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -85,4 +85,13 @@ const Leaves = (props) => {
     )
 }
 
+
+
+
 export default Leaves
+
+
+/**TASKS
+ * 1. DISPLAY ONLY THE STATUS PENDING
+ * 2. SORT BY DATE (WHO FIRST FILE THE LEAVE)
+ */

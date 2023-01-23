@@ -14,7 +14,7 @@ const createLeave = async (req, res) => {
      } = req.body
 
      try {
-          const leave = await Leave.create({ 
+          const leave = await Leaves.create({ 
                   employee_id, 
                   leave_type, 
                   date, 
@@ -34,7 +34,7 @@ const getAllLeaves = async (req, res) => {
             * await Workout.find() will run immediately even
             * if the "workout" variable is not called yet
             */
-           const allLeaves = await Leave.find({}).sort({ createdAt: -1 })
+           const allLeaves = await Leaves.find({}).sort({ createdAt: -1 })
            //displaying response to user: all workouts from DB
            res.status(200).json(allLeaves)
      } catch (error) {
@@ -51,7 +51,7 @@ const getSingleLeave = async (req, res) => {
      }
 
      try {
-           const singleLeave = await Leave.findById(id)
+           const singleLeave = await Leaves.findById(id)
            //displaying response to user: single workout by ID from DB
            res.status(200).json(singleLeave)
      } catch (error) {
@@ -67,7 +67,7 @@ const updateSingleLeave = async (req, res) => {
            return res.status(404).json({ error: 'No Leave found' })
      }
      try {
-           const singleLeave = await Leave.findOneAndUpdate({ _id: id }, {
+           const singleLeave = await Leaves.findOneAndUpdate({ _id: id }, {
                  ...req.body
            })
 
