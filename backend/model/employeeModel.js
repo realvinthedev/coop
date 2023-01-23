@@ -33,12 +33,10 @@ const employeeSchema = new Schema({
             type: String,
             required: true
       },
-
       email: {
             type: String,
-            required: true
+            required: false
       },
-
       contact_number: {
             type: Number,
             required: false
@@ -61,7 +59,7 @@ const employeeSchema = new Schema({
       },
       end_date: {
             type: String,
-            required: true
+            required: false
       },
       contract: {
             type: String,
