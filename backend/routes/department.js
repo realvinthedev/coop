@@ -7,7 +7,8 @@ const {
      createDepartment,
      getAllDepartment,
      getSingleDepartment,
-     updateSingleDepartment
+     updateSingleDepartment,
+     deleteSingleDepartment
 } = require('../controller/departmentController')
 
 
@@ -23,6 +24,9 @@ router.get('/:id', getSingleDepartment)
 
 /**EDIT SINGLE DEPARTMENT */
 router.patch('/:id', updateSingleDepartment)
+
+/**DELETE SINGLE DEPARTMENT */
+router.delete('/:id', deleteSingleDepartment)
 
 
 

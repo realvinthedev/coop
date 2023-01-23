@@ -28,17 +28,6 @@ const TextContainer = styled.div`
 const DataContainer = styled.div`
     
 `
-function createData(name, date, calories, fat, carbs, protein) {
-    return { name, date, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Juan Dela Cruz', "Jan-12", "IT", "SL", "NA", "PENDING"),
-    createData('Jayme Lanister', "Jan-12","CS", "SL", "NA", "PENDING"),
-    createData('Arya Stark',"Jan-12", "FIN", "SL", "NA", "PENDING"),
-    createData('Ned Stark', "Jan-12","IT", "SL", "NA", "PENDING"),
-    createData('Jon Snow', "Jan-12","IT", "SL", "NA", "APPROVED"),
-];
 
 const Leaves = (props) => {
     const [leaves, setLeave] = useState(null)

@@ -10,7 +10,8 @@ import PaidIcon from '@mui/icons-material/Paid';
 import NoAccountsIcon from '@mui/icons-material/NoAccounts';
 import PasswordIcon from '@mui/icons-material/Password';
 import WorkIcon from '@mui/icons-material/Work';
-import SampleLogo from '../images/logo.JPG'
+import CoopLogo from '../images/one_happy_logo.jpg'
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 
 
@@ -47,52 +48,72 @@ const Navbar = () => {
      return (
           <Container>
                <LogoContainer>
-                    <SampleLogoContainer src={SampleLogo}></SampleLogoContainer>
-                    <Logo style={{ color: "purple", fontSize: "30px", fontWeight: "600" }}>HHH HR</Logo>
+                    <SampleLogoContainer src={CoopLogo}></SampleLogoContainer>
+                    <Logo style={{ color: "purple", fontSize: "15px", fontWeight: "600" }}>One Happy Child</Logo>
                </LogoContainer>
                <List
                     sx={{ width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}
                     component="nav">
-                    <ListItemButton>
-                         <div style={{ paddingLeft: "40px" }}>
-                              <ListItemIcon>
-                                   <PeopleAltIcon />
-                              </ListItemIcon>
-                         </div>
-                         <ListItemText primary="Employees" />
-                    </ListItemButton>
-                    <ListItemButton>
-                         <div style={{ paddingLeft: "40px" }}>
-                              <ListItemIcon>
-                                   <WorkIcon />
-                              </ListItemIcon>
-                         </div>
-                         <ListItemText primary="Departments" />
-                    </ListItemButton>
-                    <ListItemButton>
-                         <div style={{ paddingLeft: "40px" }}>
-                              <ListItemIcon>
-                                   <PaidIcon />
-                              </ListItemIcon>
-                         </div>
-                         <ListItemText primary="Salary" />
-                    </ListItemButton>
-                    <ListItemButton>
-                         <div style={{ paddingLeft: "40px" }}>
-                              <ListItemIcon>
-                                   <NoAccountsIcon />
-                              </ListItemIcon>
-                         </div>
-                         <ListItemText primary="Leaves" />
-                    </ListItemButton>
-                    <ListItemButton>
-                         <div style={{ paddingLeft: "40px" }}>
-                              <ListItemIcon>
-                                   <PasswordIcon />
-                              </ListItemIcon>
-                         </div>
-                         <ListItemText primary="Credentials" />
-                    </ListItemButton>
+                    <Link to="/">
+                         <ListItemButton>
+                              <div style={{ paddingLeft: "40px" }}>
+                                   <ListItemIcon>
+                                        <DashboardIcon />
+                                   </ListItemIcon>
+                              </div>
+                              <ListItemText primary="Dashboard" />
+                         </ListItemButton>
+                    </Link>
+                    <Link to="/employees">
+                         <ListItemButton>
+                              <div style={{ paddingLeft: "40px" }}>
+                                   <ListItemIcon>
+                                        <PeopleAltIcon />
+                                   </ListItemIcon>
+                              </div>
+                              <ListItemText primary="Employees" />
+                         </ListItemButton>
+                    </Link>
+                    <Link to="/departments">
+                         <ListItemButton>
+                              <div style={{ paddingLeft: "40px" }}>
+                                   <ListItemIcon>
+                                        <WorkIcon />
+                                   </ListItemIcon>
+                              </div>
+                              <ListItemText primary="Departments" />
+                         </ListItemButton>
+                    </Link>
+                    <Link to="/salaries">
+                         <ListItemButton>
+                              <div style={{ paddingLeft: "40px" }}>
+                                   <ListItemIcon>
+                                        <PaidIcon />
+                                   </ListItemIcon>
+                              </div>
+                              <ListItemText primary="Salaries" />
+                         </ListItemButton>
+                    </Link>
+                    <Link to="/leaves">
+                         <ListItemButton>
+                              <div style={{ paddingLeft: "40px" }}>
+                                   <ListItemIcon>
+                                        <NoAccountsIcon />
+                                   </ListItemIcon>
+                              </div>
+                              <ListItemText primary="Leaves" />
+                         </ListItemButton>
+                    </Link>
+                    <Link to="/credentials">
+                         <ListItemButton>
+                              <div style={{ paddingLeft: "40px" }}>
+                                   <ListItemIcon>
+                                        <PasswordIcon />
+                                   </ListItemIcon>
+                              </div>
+                              <ListItemText primary="Credentials" />
+                         </ListItemButton>
+                    </Link>
                </List>
           </Container>
 
