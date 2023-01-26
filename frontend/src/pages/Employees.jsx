@@ -13,8 +13,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { allGridColumnsFieldsSelector, DataGrid } from '@mui/x-data-grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
+import Alert from '@mui/material/Alert';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const theme = createTheme({
      palette: {
@@ -63,8 +65,9 @@ const Card = styled.div`
 `
 const FormContainer = styled.div`
      display: flex;
-     justify-content: space-between;
-     margin-bottom: 20px;
+     padding-left: 20px;
+     padding-right: 20px;
+     flex-direction: column;
 `
 const EditDeleteContainer = styled.div`
     display: flex;
@@ -80,12 +83,19 @@ const SearchContainer = styled.div`
 `
 const FormSeparator = styled.div`
      display: flex;
-     justify-content: left;
+     justify-content: space-between;
      align-items: center;
      padding-bottom: 10px;
-     padding-top: 30px;
-     color: #9306f1;
+     padding-top: 50px;
+     color: #000;
 `
+
+const IDGeneratorContainer = styled.div`
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+`
+
 
 const Employees = (props) => {
      const [employee_id, setEmployee_id] = useState('')
@@ -93,7 +103,7 @@ const Employees = (props) => {
      const [middlename, setMiddleName] = useState('')
      const [lastname, setLastname] = useState('')
      const [age, setAge] = useState('')
-     const [birthday, setBirthday] = useState('')
+     const [birthday, setBirthday] = useState(null)
      const [address, setAddress] = useState('')
      const [email, setEmail] = useState('')
      const [contact_number, setContact_number] = useState('')
@@ -117,6 +127,7 @@ const Employees = (props) => {
      const [photo, setPhoto] = useState('')
      const [username, setUsername] = useState('')
      const [password, setPassword] = useState('')
+     const [openError, setOpenError] = useState(false);
 
 
      const [error, setError] = useState('')
@@ -138,6 +149,7 @@ const Employees = (props) => {
      const handleCloseWarning = () => {
           setOpenWarning(false);
      };
+
 
      const handleOpenDelete = () => {
           if (id == "") {
@@ -163,6 +175,33 @@ const Employees = (props) => {
      const handleCloseEdit = () => {
           setOpenEdit(false);
      };
+
+     const handleOnError = () => {
+          setOpenError(true);
+     };
+
+     const handleOffError = () => {
+          setOpenError(false);
+     };
+     const handleEmployeeId = () => {
+          let num = Math.floor(Math.random() * 90000) + 10000;
+          const value = firstname.charAt(0) + lastname.charAt(0) + num
+          setEmployee_id(value)
+     }
+
+     const [dept, setDept] = useState([])
+     useEffect(() => {
+          const fetchDepartment = async () => {
+               const response = await fetch('/api/departments')
+               const json = await response.json()
+
+               if (response.ok) {
+                    setDept(json)
+               }
+          }
+          fetchDepartment();
+
+     }, [])
 
      const columns = [
           { field: 'employee_id', headerName: 'Employee ID', width: 100 },
@@ -230,51 +269,73 @@ const Employees = (props) => {
                password: password
           }
 
-          const response = await fetch('/api/employee', {
-               method: 'POST',
-               body: JSON.stringify(employees),
-               headers: {
-                    'Content-Type': 'application/json'
-               }
-          })
-          const json = await response.json()
-          if (!response.ok) {
-               setError(json.error)
+          if (
+               firstname === "" ||
+               lastname === "" ||
+               age === "" ||
+               birthday === "" ||
+               address === "" ||
+               job_title === "" ||
+               salary === "" ||
+               start_date === "" ||
+               contract === "" ||
+               department === "" ||
+               sick_leave === "" ||
+               vacation_leave === "" ||
+               emergency_leave === ""
+          ) {
+               handleOnError()
           }
           else {
-               setEmployee_id('')
-               setFirstname('')
-               setMiddleName('')
-               setLastname('')
-               setAge('')
-               setBirthday('')
-               setAddress('')
-               setEmail('')
-               setContact_number('')
-               setIncase_of_emergency('')
-               setJob_title('')
-               setSalary('')
-               setStart_date('')
-               setEnd_date('')
-               setContract('')
-               setDepartment('')
-               setIs_active('')
-               setSss('')
-               setPagibig('')
-               setTin('')
-               setPhilhealth('')
-               setBank_name('')
-               setBank_account_number('')
-               setSick_leave('')
-               setVacation_leave('')
-               setEmergencty_leave('')
-               setPhoto('')
-               setUsername('')
-               setPassword('')
+               handleOffError()
+               const response = await fetch('/api/employee', {
+                    method: 'POST',
+                    body: JSON.stringify(employees),
+                    headers: {
+                         'Content-Type': 'application/json'
+                    }
+               })
+               const json = await response.json()
+               if (!response.ok) {
+                    setError(json.error)
+               }
+               else {
+                    setEmployee_id('')
+                    setFirstname('')
+                    setMiddleName('')
+                    setLastname('')
+                    setAge('')
+                    setBirthday('')
+                    setAddress('')
+                    setEmail('')
+                    setContact_number('')
+                    setIncase_of_emergency('')
+                    setJob_title('')
+                    setSalary('')
+                    setStart_date('')
+                    setEnd_date('')
+                    setContract('')
+                    setDepartment('')
+                    setIs_active('')
+                    setSss('')
+                    setPagibig('')
+                    setTin('')
+                    setPhilhealth('')
+                    setBank_name('')
+                    setBank_account_number('')
+                    setSick_leave('')
+                    setVacation_leave('')
+                    setEmergencty_leave('')
+                    setPhoto('')
+                    setUsername('')
+                    setPassword('')
 
-               console.log('New department added', json)
+                    console.log('New department added', json)
+                    window.location.reload();
+               }
           }
-          window.location.reload();
+
+
      }
 
      const handlePatch = async (e) => {
@@ -502,325 +563,309 @@ const Employees = (props) => {
                                         aria-labelledby="alert-dialog-title"
                                         aria-describedby="alert-dialog-description"
                                         fullWidth
-                                        maxWidth="xl"
+                                        maxWidth="sm"
                                    >
                                         <DialogTitle id="alert-dialog-title">
-
                                              Adding New Employee
                                         </DialogTitle>
                                         <DialogContent style={{ height: '700px', paddingTop: '20px' }}>
+                                             {openError ? <Alert onClose={handleOffError} severity="error">Please fill up the form completely</Alert> : ""}
                                              <FormSeparator>
                                                   Personal Details
+                                                  <span style={{ fontStyle: "italic", color: "#d13f3f", fontSize: "12px" }}>*required</span>
                                              </FormSeparator>
-                                             <FormContainer>
+
+                                             <TextField
+                                                  // error={firstname === ""}
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Firstname"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setFirstname(e.target.value)}
+                                                  value={firstname}
+                                             />
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Middlename"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setMiddleName(e.target.value)}
+                                                  value={middlename}
+                                             />
+                                             <TextField
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Lastname"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setLastname(e.target.value)}
+                                                  value={lastname}
+                                             />
+                                             <TextField
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Age"
+                                                  style={{ paddingBottom: "20px" }}
+                                                  fullWidth
+                                                  onChange={(e) => setAge(e.target.value)}
+                                                  value={age}
+                                             />
+                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                  <DatePicker
+                                                       label="Birthday"
+                                                       value={birthday}
+                                                       onChange={(newValue) => { setBirthday(newValue) }}
+                                                       renderInput={(params) => <TextField fullWidth required style={{ paddingBottom: "20px" }}{...params} error={false} />}
+                                                  />
+                                             </LocalizationProvider>
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Email"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setEmail(e.target.value)}
+                                                  value={email}
+                                             />
+                                             <TextField
+                                                  type="number"
+                                                  id="outlined-required"
+                                                  label="Contact Number"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setContact_number(e.target.value)}
+                                                  value={contact_number}
+                                             />
+                                             <TextField
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Address"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setAddress(e.target.value)}
+                                                  value={address}
+                                             />
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Incase of Emergency"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setIncase_of_emergency(e.target.value)}
+                                                  value={incase_of_emergency}
+                                             />
+                                             <FormSeparator>
+                                                  Job Details
+                                                  <span style={{ fontStyle: "italic", color: "#d13f3f", fontSize: "12px" }}>*required</span>
+                                             </FormSeparator>
+                                             <TextField
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Job Title"
+                                                  style={{ paddingBottom: "20px" }}
+                                                  fullWidth
+                                                  onChange={(e) => setJob_title(e.target.value)}
+                                                  value={job_title}
+                                             />
+                                             <TextField
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Contract"
+                                                  style={{ paddingBottom: "20px" }}
+                                                  fullWidth
+                                                  onChange={(e) => setContract(e.target.value)}
+                                                  value={contract}
+                                             />
+                                             <TextField
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Department"
+                                                  fullWidth
+                                                  select
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setDepartment(e.target.value)}
+                                                  value={department}
+                                             >
+                                                  {dept.map((data) => {
+                                                       return <MenuItem key={data._id} value={data.department_name}>{data.department_name}</MenuItem>
+                                                  })}
+                                             </TextField>
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Is Active?"
+                                                  fullWidth
+                                                  select
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setIs_active(e.target.value)}
+                                                  value={is_active}
+                                             >
+                                                  <MenuItem value={true}>Yes</MenuItem>
+                                                  <MenuItem value={false}>Not anymore</MenuItem>
+                                             </TextField>
+                                             <TextField
+                                                  type="number"
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Salary"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setSalary(e.target.value)}
+                                                  value={salary}
+                                             />
+                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                  <DatePicker
+                                                       label="Start Date"
+                                                       value={start_date}
+                                                       onChange={(newValue) => { setStart_date(newValue) }}
+                                                       renderInput={(params) => <TextField fullWidth required style={{ paddingBottom: "20px" }}{...params} error={false} />}
+                                                  />
+                                             </LocalizationProvider>
+                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                  <DatePicker
+                                                       label="End Date"
+                                                       value={end_date}
+                                                       onChange={(newValue) => { setEnd_date(newValue) }}
+                                                       renderInput={(params) => <TextField fullWidth style={{ paddingBottom: "20px" }}{...params} error={false} />}
+                                                  />
+                                             </LocalizationProvider>
+                                             <FormSeparator>
+                                                  Government Taxes
+                                             </FormSeparator>
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="SSS"
+                                                  style={{ paddingBottom: "20px" }}
+                                                  fullWidth
+                                                  onChange={(e) => setSss(e.target.value)}
+                                                  value={sss}
+                                             />
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Pagibig"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setPagibig(e.target.value)}
+                                                  value={pagibig}
+                                             />
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="TIN"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setTin(e.target.value)}
+                                                  value={tin}
+                                             />
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Philhealth"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setPhilhealth(e.target.value)}
+                                                  value={philhealth}
+                                             />
+                                             <FormSeparator>
+                                                  Bank Details
+                                             </FormSeparator>
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Bank Name"
+                                                  style={{ paddingBottom: "20px" }}
+                                                  fullWidth
+                                                  onChange={(e) => setBank_name(e.target.value)}
+                                                  value={bank_name}
+                                             />
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Account Number"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setBank_account_number(e.target.value)}
+                                                  value={bank_account_number}
+                                             />
+                                             <FormSeparator>
+                                                  Leave Credits
+                                                  <span style={{ fontStyle: "italic", color: "#d13f3f", fontSize: "12px" }}>*required</span>
+                                             </FormSeparator>
+                                             <TextField
+                                                  type="number"
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Vacation Leave"
+                                                  style={{ paddingBottom: "20px" }}
+                                                  fullWidth
+                                                  onChange={(e) => setVacation_leave(e.target.value)}
+                                                  value={vacation_leave}
+                                             />
+                                             <TextField
+                                                  type="number"
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Sick Leave"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setSick_leave(e.target.value)}
+                                                  value={sick_leave}
+                                             />
+                                             <TextField
+                                                  type="number"
+                                                  required
+                                                  id="outlined-required"
+                                                  label="Emergency Leave"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setEmergencty_leave(e.target.value)}
+                                                  value={emergency_leave}
+                                             />
+                                             <FormSeparator>
+                                                  Credentials
+                                                  <span style={{ fontStyle: "italic", color: "#d13f3f", fontSize: "12px" }}>*required</span>
+                                             </FormSeparator>
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Username"
+                                                  style={{ paddingBottom: "20px" }}
+                                                  fullWidth
+                                                  onChange={(e) => setUsername(e.target.value)}
+                                                  value={username}
+                                             />
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Password"
+                                                  fullWidth
+                                                  style={{ paddingBottom: "20px" }}
+                                                  onChange={(e) => setPassword(e.target.value)}
+                                                  value={password}
+                                             />
+                                             <IDGeneratorContainer>
                                                   <TextField
                                                        required
                                                        id="outlined-required"
                                                        label="Employee ID"
-                                                       style={{ paddingRight: "20px" }}
                                                        fullWidth
                                                        onChange={(e) => setEmployee_id(e.target.value)}
                                                        value={employee_id}
+                                                       InputProps={{
+                                                            readOnly: true,
+                                                       }}
                                                   />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Firstname"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setFirstname(e.target.value)}
-                                                       value={firstname}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Middlename"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setMiddleName(e.target.value)}
-                                                       value={middlename}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Lastname"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setLastname(e.target.value)}
-                                                       value={lastname}
-                                                  />
-                                             </FormContainer>
-                                             <FormContainer>
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Age"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setAge(e.target.value)}
-                                                       value={age}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Birthday"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setBirthday(e.target.value)}
-                                                       value={birthday}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Email"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setEmail(e.target.value)}
-                                                       value={email}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       type="number"
-                                                       id="outlined-required"
-                                                       label="Contact Number"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setContact_number(e.target.value)}
-                                                       value={contact_number}
-                                                  />
-                                             </FormContainer>
-                                             <FormContainer>
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Address"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setAddress(e.target.value)}
-                                                       value={address}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Incase of Emergency"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setIncase_of_emergency(e.target.value)}
-                                                       value={incase_of_emergency}
-                                                  />
-                                             </FormContainer>
-                                             <FormSeparator>
-                                                  Job Details
-                                             </FormSeparator>
-                                             <FormContainer>
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Job Title"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setJob_title(e.target.value)}
-                                                       value={job_title}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Contract"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setContract(e.target.value)}
-                                                       value={contract}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Department"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setDepartment(e.target.value)}
-                                                       value={department}
-                                                  />
-
-                                             </FormContainer>
-                                             <FormContainer>
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Is Active?"
-                                                       fullWidth
-                                                       select
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setIs_active(e.target.value)}
-                                                       value={is_active}
-                                                  >
-                                                       <MenuItem value={true}>Yes</MenuItem>
-                                                       <MenuItem value={false}>Not anymore</MenuItem>
-                                                  </TextField>
-                                                  <TextField
-                                                       type="number"
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Salary"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setSalary(e.target.value)}
-                                                       value={salary}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Start Date"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setStart_date(e.target.value)}
-                                                       value={start_date}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="End Date"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setEnd_date(e.target.value)}
-                                                       value={end_date}
-                                                  />
-                                             </FormContainer>
-                                             <FormSeparator>
-                                                  Government Taxes
-                                             </FormSeparator>
-                                             <FormContainer>
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="SSS"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setSss(e.target.value)}
-                                                       value={sss}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Pagibig"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setPagibig(e.target.value)}
-                                                       value={pagibig}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="TIN"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setTin(e.target.value)}
-                                                       value={tin}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Philhealth"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setPhilhealth(e.target.value)}
-                                                       value={philhealth}
-                                                  />
-                                             </FormContainer>
-                                             <FormSeparator>
-                                                  Bank Details
-                                             </FormSeparator>
-                                             <FormContainer>
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Bank Name"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setBank_name(e.target.value)}
-                                                       value={bank_name}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Account Number"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setBank_account_number(e.target.value)}
-                                                       value={bank_account_number}
-                                                  />
-                                             </FormContainer>
-                                             <FormSeparator>
-                                                  Leave Credits
-                                             </FormSeparator>
-                                             <FormContainer>
-                                                  <TextField
-                                                       type="number"
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Vacation Leave"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setVacation_leave(e.target.value)}
-                                                       value={vacation_leave}
-                                                  />
-                                                  <TextField
-                                                       type="number"
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Sick Leave"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setSick_leave(e.target.value)}
-                                                       value={sick_leave}
-                                                  />
-                                                  <TextField
-                                                       type="number"
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Emergency Leave"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setEmergencty_leave(e.target.value)}
-                                                       value={emergency_leave}
-                                                  />
-                                             </FormContainer>
-                                             <FormSeparator>
-                                                  Credentials
-                                             </FormSeparator>
-                                             <FormContainer>
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Username"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setUsername(e.target.value)}
-                                                       value={username}
-                                                  />
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Password"
-                                                       fullWidth
-                                                       style={{ paddingRight: "20px" }}
-                                                       onChange={(e) => setPassword(e.target.value)}
-                                                       value={password}
-                                                  />
-                                             </FormContainer>
+                                                  <ThemeProvider theme={theme}>
+                                                       <Button style={{ padding: "15px", marginLeft: "5px" }} variant="outlined" color="green" onClick={handleEmployeeId}>
+                                                            Generate
+                                                       </Button>
+                                                  </ThemeProvider>
+                                             </IDGeneratorContainer>
                                              <FormSeparator>
                                                   Photo
                                              </FormSeparator>
-                                             <FormContainer>
-                                                  <TextField
-                                                       required
-                                                       id="outlined-required"
-                                                       label="Photo Link"
-                                                       style={{ paddingRight: "20px" }}
-                                                       fullWidth
-                                                       onChange={(e) => setPhoto(e.target.value)}
-                                                       value={photo}
-                                                  />
-                                             </FormContainer>
+
+                                             <TextField
+                                                  id="outlined-required"
+                                                  label="Photo Link"
+                                                  style={{ paddingBottom: "20px" }}
+                                                  fullWidth
+                                                  onChange={(e) => setPhoto(e.target.value)}
+                                                  value={photo}
+                                             />
+
 
                                         </DialogContent>
                                         <DialogActions>

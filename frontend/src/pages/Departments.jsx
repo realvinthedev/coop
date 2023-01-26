@@ -397,9 +397,6 @@ const Departments = (props) => {
                                              </Button>
                                         </DialogActions>
                                    </Dialog>
-                                
-                                 
-                                  
                               </div>
                          </Card>
                     </Main>
