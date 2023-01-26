@@ -280,7 +280,6 @@ const Departments = (props) => {
                                         aria-describedby="alert-dialog-description"
                                    >
                                         <DialogTitle id="alert-dialog-title">
-
                                              <h2>{"Are you sure to delete selected item?"}</h2>
                                         </DialogTitle>
                                         <DialogContent>
