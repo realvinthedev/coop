@@ -5,7 +5,8 @@ const {
      createLeave,
      getAllLeaves,
      getSingleLeave,
-     updateSingleLeave
+     updateSingleLeave,
+     deleteSingleLeave
 } = require('../controller/LeavesController')
 
 
@@ -21,6 +22,9 @@ router.get('/:id', getSingleLeave)
 
 /**EDIT SINGLE Leave */
 router.patch('/:id', updateSingleLeave)
+
+/**DELETE SINGLE Leave */
+router.delete('/:id', deleteSingleLeave)
 
 
 
