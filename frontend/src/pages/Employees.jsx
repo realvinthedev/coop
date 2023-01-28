@@ -192,7 +192,7 @@ const Employees = (props) => {
      const [dept, setDept] = useState([])
      useEffect(() => {
           const fetchDepartment = async () => {
-               const response = await fetch('/api/departments')
+               const response = await fetch('https://coop-backend-v1.herokuapp.com/api/departments')
                const json = await response.json()
 
                if (response.ok) {
@@ -288,7 +288,7 @@ const Employees = (props) => {
           }
           else {
                handleOffError()
-               const response = await fetch('/api/employee', {
+               const response = await fetch('https://coop-backend-v1.herokuapp.com/api/employee', {
                     method: 'POST',
                     body: JSON.stringify(employees),
                     headers: {
@@ -391,7 +391,7 @@ const Employees = (props) => {
           }
           else {
                handleOnError()
-               const response = await fetch('/api/employee/' + id, {
+               const response = await fetch('https://coop-backend-v1.herokuapp.com/api/employee/' + id, {
                     method: 'PATCH',
                     body: JSON.stringify(employees),
                     headers: {
@@ -442,7 +442,7 @@ const Employees = (props) => {
 
      /**DELETE */
      const handleDelete = async () => {
-          const response = await fetch('/api/employee/' + id, {
+          const response = await fetch('https://coop-backend-v1.herokuapp.com/api/employee/' + id, {
                method: 'DELETE'
           })
           const json = await response.json()
@@ -454,7 +454,7 @@ const Employees = (props) => {
      const [employees, setEmployee] = useState([])
      useEffect(() => {
           const fetchEmployees = async () => {
-               const response = await fetch('/api/employee')
+               const response = await fetch('https://coop-backend-v1.herokuapp.com/api/employee')
                const json = await response.json()
 
                if (response.ok) {
@@ -689,11 +689,16 @@ const Employees = (props) => {
                                                   required
                                                   id="outlined-required"
                                                   label="Contract"
+                                                  select
                                                   style={{ paddingBottom: "20px" }}
                                                   fullWidth
                                                   onChange={(e) => setContract(e.target.value)}
                                                   value={contract}
-                                             />
+                                             >
+                                                  <MenuItem value={true}>Contractual</MenuItem>
+                                                  <MenuItem value={false}>Permanent</MenuItem>
+                                                  <MenuItem value={false}>Provisionary</MenuItem>
+                                             </TextField>
                                              <TextField
                                                   required
                                                   id="outlined-required"
@@ -989,11 +994,16 @@ const Employees = (props) => {
                                                   required
                                                   id="outlined-required"
                                                   label="Contract"
+                                                  select
                                                   style={{ paddingBottom: "20px" }}
                                                   fullWidth
                                                   onChange={(e) => setContract(e.target.value)}
                                                   value={contract}
-                                             />
+                                             >
+                                                  <MenuItem value={true}>Contractual</MenuItem>
+                                                  <MenuItem value={false}>Permanent</MenuItem>
+                                                  <MenuItem value={false}>Provisionary</MenuItem>
+                                             </TextField>
                                              <TextField
                                                   required
                                                   id="outlined-required"

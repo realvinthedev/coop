@@ -4,7 +4,7 @@ function App() {
           <div className="App">
                <div className='flex'>
                     <div className=''>
-                         <Home />
+                         <Home/>
                     </div>
                </div>
           </div>

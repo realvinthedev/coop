@@ -66,7 +66,7 @@ const Dashboard = (props) => {
     const [departments, setDepartment] = useState([])
      useEffect(() => {
           const fetchDepartment = async () => {
-               const response = await fetch('/api/departments')
+               const response = await fetch('https://coop-backend-v1.herokuapp.com/api/departments')
                const json = await response.json()
 
                if (response.ok) {
@@ -79,7 +79,7 @@ const Dashboard = (props) => {
      const [employees, setEmployee] = useState([])
      useEffect(() => {
           const fetchEmployees = async () => {
-               const response = await fetch('/api/employee')
+               const response = await fetch('https://coop-backend-v1.herokuapp.com/api/employee')
                const json = await response.json()
 
                if (response.ok) {
@@ -93,7 +93,7 @@ const Dashboard = (props) => {
      const [pendingLeaves, setPendingLeaves] = useState([]);
      useEffect(() => {
           const fetchLeaves = async () => {
-               const response = await fetch('/api/leaves')
+               const response = await fetch('https://coop-backend-v1.herokuapp.com/api/leaves')
                const json = await response.json()
 
                if (response.ok) {

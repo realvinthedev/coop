@@ -25,27 +25,27 @@ const Home = () => {
                 <Routes>
                     <Route
                         path="/"
-                        element={<Dashboard title="Dashboard" user="Kevin" />}
+                        element={<Dashboard title="Dashboard" user="User" />}
                     />
                     <Route
                         path="/departments"
-                        element={<Department title="Department" user="Kevin" />}
+                        element={<Department title="Department" user="User" />}
                     />
                     <Route
                         path="/employees"
-                        element={<Employees title="Employees" user="Kevin" />}
+                        element={<Employees title="Employees" user="User" />}
                     />
                     <Route
                         path="/salaries"
-                        element={<Salaries title="Salaries" user="Kevin" />}
+                        element={<Salaries title="Salaries" user="User" />}
                     />
                     <Route
                         path="/leaves"
-                        element={<Leaves title="Leaves" user="Kevin" />}
+                        element={<Leaves title="Leaves" user="User" />}
                     />
                     <Route
                         path="/credentials"
-                        element={<Credentials title="Credentials" user="Kevin" />}
+                        element={<Credentials title="Credentials" user="User" />}
                     />
                 </Routes>
             </Container>

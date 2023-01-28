@@ -118,7 +118,7 @@ const Leaves = (props) => {
     const [leaves, setLeaves] = useState([])
     useEffect(() => {
         const fetchLeaves = async () => {
-            const response = await fetch('/api/leaves')
+            const response = await fetch('https://coop-backend-v1.herokuapp.com/api/leaves')
             const json = await response.json()
 
             if (response.ok) {

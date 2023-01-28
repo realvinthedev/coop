@@ -18,7 +18,9 @@ const Wrapper = styled.div`
 const CardContainer = styled.div`
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
+    margin-top: 200px;
 `
 
 const Leaves = (props) => {
@@ -28,6 +30,10 @@ const Leaves = (props) => {
           <Container>
                <Wrapper>
                     <Header title={props.title} user={props.user} />
+                    <CardContainer>
+                         <div>{"This feature will be up on next update."}</div>
+                         <div>{"Here, you can see all employee's leaves as well as add, update, delete, and approve/decline leaves."}</div>
+                    </CardContainer>
                </Wrapper>
           </Container>
 

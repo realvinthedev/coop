@@ -146,7 +146,7 @@ const Departments = (props) => {
                description: description
           }
 
-          const response = await fetch('/api/departments', {
+          const response = await fetch('https://coop-backend-v1.herokuapp.com/api/departments', {
                method: 'POST',
                body: JSON.stringify(departments),
                headers: {
@@ -173,7 +173,7 @@ const Departments = (props) => {
                description: description
           }
 
-          const response = await fetch('/api/departments/' + id, {
+          const response = await fetch('https://coop-backend-v1.herokuapp.com/api/departments/' + id, {
                method: 'PATCH',
                body: JSON.stringify(departments),
                headers: {
@@ -196,7 +196,7 @@ const Departments = (props) => {
      const [departments, setDepartment] = useState([])
      useEffect(() => {
           const fetchDepartment = async () => {
-               const response = await fetch('/api/departments')
+               const response = await fetch('https://coop-backend-v1.herokuapp.com/api/departments')
                const json = await response.json()
 
                if (response.ok) {
@@ -214,7 +214,7 @@ const Departments = (props) => {
      };
 
      const handleDelete = async () => {
-          const response = await fetch('/api/departments/' + id, {
+          const response = await fetch('https://coop-backend-v1.herokuapp.com/api/departments/' + id, {
                method: 'DELETE'
           })
           const json = await response.json()
@@ -231,7 +231,6 @@ const Departments = (props) => {
                <Wrapper>
                     <Main>
                          <Header title={props.title} user={props.user} />
-
                          <Card>
                               <SearchContainer>
                                    <TextField
